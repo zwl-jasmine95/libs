@@ -1,0 +1,27 @@
+.silder-box{
+    border: solid 1px rgb(102, 55, 231);
+    position: relative;
+}
+/* silder-content */
+.silder-box>.silder-content{
+    border: solid 1px rgb(48, 45, 45);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: max-content;
+    position: absolute;
+}
+.silder-content .silder-item{
+    list-style: none;
+    float: left;
+    height: 100%;
+}
+.silder-content .silder-item>img{
+    height: 100%;
+    width: 100%;
+}
+
+/* silder-circle */
+.silder-box>.silder-circle{
+    border: solid 1px red;
+}

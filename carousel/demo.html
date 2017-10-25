@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <link rel="stylesheet" href="./src/z-carousel.css">
+    <script src="./src/z-carousel.js"></script>
+</head>
+
+<body>
+    <div class="silder-box">
+        <ul class="silder-content">
+            <li class="silder-item silder-item-active">
+                <img src="./images/carousel-1.jpg" alt="轮播图-1">
+            </li>
+            <li class="silder-item">
+                <img src="./images/carousel-2.jpg" alt="轮播图-2">
+            </li>
+            <li class="silder-item">
+                <img src="./images/carousel-3.jpg" alt="轮播图-3">
+            </li>
+            <li class="silder-item">
+                <img src="./images/carousel-4.jpg" alt="轮播图-4">
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const obj = {
+            width:'600px',
+            height:'400px'
+        }
+        zCarousel(obj);
+    </script>
+</body>
+
+</html>
