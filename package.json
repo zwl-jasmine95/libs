@@ -1,0 +1,14 @@
+{
+  "name": "libs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/zwl-jasmine95/libs.git",
+  "author": "曾文莉 <zengwenli95@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev":"http-server"
+  },
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}
