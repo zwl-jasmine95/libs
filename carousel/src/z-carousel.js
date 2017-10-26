@@ -69,13 +69,17 @@ class zCarousel {
     // }
     round(direction) {
         const dir = direction || 'left'
-        const max_width = (this.len - 1) * this.width
+        const max_width = this.len * this.width
         const width = this.width
         const _content = this._content
 
         let timer
 
         if (dir == 'left') {
+            //克隆第一个li节点，实现无缝连接滑动
+            const _first_li = this._li[0].cloneNode(true);
+            this._content.appendChild(_first_li);
+
             let left = Math.abs(_content.offsetLeft)
             let num = 0;
             function animate() {
@@ -84,36 +88,21 @@ class zCarousel {
                     num += 10;
 
                     if (num % width == 0) {
-                        console.log(timer);
                         cancelAnimationFrame(timer)
                     }
                 } else {
                     _content.style.left = 0;
                     num = 0;
-
                 }
-
                 timer = requestAnimationFrame(animate);
-                console.log(timer);
             }
             animate();
-
         }
     }
-
-    carousel() {
-        setInterval(() => {
-            this.round()
-        }, 1000)
-    }
-
-
 
     initCarousel() {
         this.setBoxSize()
         this.creatCircle()
-        // this.carousel()
         this.round()
     }
-
 }
