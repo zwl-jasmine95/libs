@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="silder-box">
+    <div id="silder-box">
         <ul class="silder-content">
             <li class="silder-item silder-item-active">
                 <img src="./images/carousel-1.jpg" alt="轮播图-1">
@@ -30,10 +30,11 @@
 
     <script>
         const obj = {
-            width:'600px',
-            height:'400px'
+            width:600,
+            height:400
         }
-        zCarousel(obj);
+        let carousel = new zCarousel(obj);
+        carousel.initCarousel();
     </script>
 </body>
 

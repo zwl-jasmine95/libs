@@ -1,10 +1,9 @@
-.silder-box{
-    border: solid 1px rgb(102, 55, 231);
+#silder-box{
     position: relative;
+    overflow: hidden;
 }
 /* silder-content */
-.silder-box>.silder-content{
-    border: solid 1px rgb(48, 45, 45);
+#silder-box>.silder-content{
     height: 100%;
     margin: 0;
     padding: 0;
@@ -22,6 +21,6 @@
 }
 
 /* silder-circle */
-.silder-box>.silder-circle{
+#silder-box>.silder-circle{
     border: solid 1px red;
 }
