@@ -9,9 +9,18 @@
  * Project: https://github.com/zwl-jasmine95/libs/tree/master/carousel
  */
 class zCarousel {
+    /**
+     * @param {object} obj 
+     * width {number} 轮播区域宽度（px）
+     * height {number} 轮播区域高度（px）
+     * speed {number} 轮播速度（px）
+     * time {number} 停顿时间（ms）
+     */
     constructor(obj) {
         this.width = obj.width || 500
         this.height = obj.height || 300
+        this.speed = obj.speed || 8
+        this.time = obj.time || 3000
 
         this._box = document.querySelector('#silder-box')
         this._content = document.querySelector('#silder-box .silder-content')
@@ -54,24 +63,13 @@ class zCarousel {
      * @param {string} direction 滑动方向
      *  'left':向左滑(默认),'right':向右滑 
      */
-    // round(direction){
-    //     const dir = direction || 'left'
-    //     const max_width = (this.len - 1) * this.width
-    //     console.log(max_width)
-    //     if(dir == 'left'){
-    //         let left = Math.abs(this._content.offsetLeft)
-    //         if(left < max_width){
-    //             this._content.style.left = -left - this.width + 'px'
-    //         }else{
-    //             this._content.style.left = 0
-    //         }
-    //     }
-    // }
     round(direction) {
         const dir = direction || 'left'
         const max_width = this.len * this.width
         const width = this.width
         const _content = this._content
+        const speed = this.speed;
+        const time = this.time;
 
         let timer
 
@@ -82,19 +80,25 @@ class zCarousel {
 
             let left = Math.abs(_content.offsetLeft)
             let num = 0;
+
             function animate() {
                 if (num <= max_width) {
                     _content.style.left = - num + 'px';
-                    num += 10;
 
                     if (num % width == 0) {
                         cancelAnimationFrame(timer)
+                        setTimeout(() => {
+                            timer = requestAnimationFrame(animate);
+                        }, time)
+                    } else {
+                        timer = requestAnimationFrame(animate);
                     }
+                    num += speed;
                 } else {
                     _content.style.left = 0;
                     num = 0;
+                    timer = requestAnimationFrame(animate);
                 }
-                timer = requestAnimationFrame(animate);
             }
             animate();
         }
