@@ -8,21 +8,28 @@
     <title>轮播图</title>
     <link rel="stylesheet" href="./src/z-carousel.css">
     <script src="./src/z-carousel.js"></script>
+
+    <style>
+        #slider-box{
+            margin: 50px auto;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="silder-box">
-        <ul class="silder-content">
-            <li class="silder-item silder-item-active">
+    <div id="slider-box">
+        
+        <ul class="slider-content">
+            <li class="slider-item slider-item-active">
                 <img src="./images/carousel-1.jpg" alt="轮播图-1">
             </li>
-            <li class="silder-item">
+            <li class="slider-item">
                 <img src="./images/carousel-2.jpg" alt="轮播图-2">
             </li>
-            <li class="silder-item">
+            <li class="slider-item">
                 <img src="./images/carousel-3.jpg" alt="轮播图-3">
             </li>
-            <li class="silder-item">
+            <li class="slider-item">
                 <img src="./images/carousel-4.jpg" alt="轮播图-4">
             </li>
         </ul>
@@ -31,7 +38,9 @@
     <script>
         const obj = {
             width:600,
-            height:400
+            height:400,
+            speed:15,
+            time:2000
         }
         let carousel = new zCarousel(obj);
         carousel.initCarousel();

@@ -1,26 +1,26 @@
-#silder-box{
+#slider-box{
     position: relative;
     overflow: hidden;
 }
-/* silder-content */
-#silder-box>.silder-content{
+/* slider-content */
+#slider-box>.slider-content{
     height: 100%;
     margin: 0;
     padding: 0;
     width: max-content;
     position: absolute;
 }
-.silder-content .silder-item{
+.slider-content .slider-item{
     list-style: none;
     float: left;
     height: 100%;
 }
-.silder-content .silder-item>img{
+.slider-content .slider-item>img{
     height: 100%;
     width: 100%;
 }
 
-/* silder-circle */
-#silder-box>.silder-circle{
+/* slider-circle */
+#slider-box>.slider-circle{
     border: solid 1px red;
 }

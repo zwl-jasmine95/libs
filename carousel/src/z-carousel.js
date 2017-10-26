@@ -22,9 +22,9 @@ class zCarousel {
         this.speed = obj.speed || 8
         this.time = obj.time || 3000
 
-        this._box = document.querySelector('#silder-box')
-        this._content = document.querySelector('#silder-box .silder-content')
-        this._li = document.querySelectorAll('#silder-box .silder-item')
+        this._box = document.querySelector('#slider-box')
+        this._content = document.querySelector('#slider-box .slider-content')
+        this._li = document.querySelectorAll('#slider-box .slider-item')
         this.len = this._li.length
     }
     /**
@@ -46,7 +46,7 @@ class zCarousel {
     creatCircle() {
         const _circle = document.createElement('div')
 
-        _circle.setAttribute('class', 'silder-circle')
+        _circle.setAttribute('class', 'slider-circle')
 
         for (let i = 0; i < this.len; i++) {
             let _item = document.createElement('div')
