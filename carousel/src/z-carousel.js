@@ -46,6 +46,11 @@ class zCarousel {
         this._li.forEach(_i => {
             _i.style.width = this.width + 'px'
         })
+
+        
+        //克隆第一个li节点，插入到所有li标签后面，实现无缝连接滑动
+        const _first_li = this._li[0].cloneNode(true)
+        this._content.appendChild(_first_li)
     }
 
     /**
@@ -112,24 +117,51 @@ class zCarousel {
         animate()
     }
 
+    // singleSliding(dir){
+    //     const state = dir || 'left'
+    //     const width = this.width
+    //     const _content = this._content
+    //     const speed = this.speed
+    //     // const max_width = this.len * this.width
+    //     const max_width = (this.len-1) * this.width
+    //     const left = this._content.offsetLeft
+
+    //     let timer
+    //     let num = 0
+    //     let limit = (left > -max_width && state == 'left')||(left < 0 && state == 'right')
+    //     function animate(){
+    //         if (num <= width && limit) {
+    //             _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
+    //             timer = requestAnimationFrame(animate)
+    //             num += speed
+    //         }
+    //     }
+    //     animate()
+        
+    // }
     singleSliding(dir){
         const state = dir || 'left'
         const width = this.width
         const _content = this._content
         const speed = this.speed
-        // const max_width = this.len * this.width
-        const max_width = (this.len-1) * this.width
+        const max_width = this.len * this.width
+        // const max_width = (this.len - 1) * this.width
         const left = this._content.offsetLeft
 
         let timer
         let num = 0
-        let limit = (left > -max_width && state == 'left')||(left < 0 && state == 'right')
+        
         function animate(){
-            if (num <= width && limit) {
-                _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
-                timer = requestAnimationFrame(animate)
-                num += speed
+            if(left <= -max_width && state == 'left'){
+                _content.style.left = 0;
+            }else{
+                if (num <= width) {
+                    _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
+                    timer = requestAnimationFrame(animate)
+                    num += speed
+                }
             }
+            
         }
         animate()
         
@@ -140,7 +172,7 @@ class zCarousel {
         this.creatCircle()
         // this.round()
         this._box.addEventListener('mouseover',()=>{
-            
+            // console.log(document.querySelectorAll('.slider-btn')[0].style)
         })
         this._box.addEventListener('mouseleave',()=>{
             

@@ -34,6 +34,7 @@
     top: 50%;
     margin-top: -35px;
     user-select: none;
+    /* opacity: 0; */
 }
 #slider-box .slider-prev{
     left: 0;
