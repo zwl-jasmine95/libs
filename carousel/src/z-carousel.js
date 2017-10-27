@@ -13,18 +13,26 @@ class zCarousel {
      * @param {object} obj 
      * width {number} 轮播区域宽度（px）
      * height {number} 轮播区域高度（px）
-     * speed {number} 轮播速度（px）
+     * speed {string} 轮播速度 slow|normal|fast
      * time {number} 停顿时间（ms）
      */
     constructor(obj) {
+        const s = {
+            'slow':0.01,
+            'normal':0.025,
+            'fast':0.05
+        }
+
         this.width = obj.width || 500
         this.height = obj.height || 300
-        this.speed = obj.speed || 8
+        this.speed = s[(obj.speed || 'normal')] * this.width
         this.time = obj.time || 3000
 
         this._box = document.querySelector('#slider-box')
         this._content = document.querySelector('#slider-box .slider-content')
         this._li = document.querySelectorAll('#slider-box .slider-item')
+        this._prev = document.querySelector('#slider-box .slider-prev')
+        this._next = document.querySelector('#slider-box .slider-next')
         this.len = this._li.length
     }
     /**
@@ -48,7 +56,7 @@ class zCarousel {
 
         _circle.setAttribute('class', 'slider-circle')
 
-        for (let i = 0; i < this.len; i++) {
+        for (let i = 0; i < this.len ;i++) {
             let _item = document.createElement('div')
             i == 0 ? _item.setAttribute('class', 'circle-item circle-item-active')
                 : _item.setAttribute('class', 'circle-item')
@@ -62,51 +70,84 @@ class zCarousel {
      * 图片滑动
      * @param {string} direction 滑动方向
      *  'left':向左滑(默认),'right':向右滑 
+     * @param {number} start_len 滑动的起始位置（默认为0）
      */
-    round(direction) {
+    round(direction,start_len) {
         const dir = direction || 'left'
         const max_width = this.len * this.width
         const width = this.width
         const _content = this._content
-        const speed = this.speed;
-        const time = this.time;
+        const speed = this.speed
+        const time = this.time
 
-        let timer
+        const state = dir == 'left' ? '-' : ''
+        let timer 
 
-        if (dir == 'left') {
-            //克隆第一个li节点，实现无缝连接滑动
-            const _first_li = this._li[0].cloneNode(true);
-            this._content.appendChild(_first_li);
+        //克隆第一个li节点，插入到所有li标签后面，实现无缝连接滑动
+        const _first_li = this._li[0].cloneNode(true)
+        this._content.appendChild(_first_li)
 
-            let left = Math.abs(_content.offsetLeft)
-            let num = 0;
+        // let left = Math.abs(_content.offsetLeft)
+        let num = start_len || 0
 
-            function animate() {
-                if (num <= max_width) {
-                    _content.style.left = - num + 'px';
-
-                    if (num % width == 0) {
-                        cancelAnimationFrame(timer)
-                        setTimeout(() => {
-                            timer = requestAnimationFrame(animate);
-                        }, time)
-                    } else {
-                        timer = requestAnimationFrame(animate);
-                    }
-                    num += speed;
+        function animate() {
+            if (num <= max_width) {
+                _content.style.left = state +  num + 'px'
+                
+                if (num % width == 0) {
+                    cancelAnimationFrame(timer)
+                    setTimeout(() => {
+                        timer = requestAnimationFrame(animate)
+                    }, time)
                 } else {
-                    _content.style.left = 0;
-                    num = 0;
-                    timer = requestAnimationFrame(animate);
+                    timer = requestAnimationFrame(animate)
                 }
+                num += speed
+            } else {
+                _content.style.left = 0
+                num = 0
+                timer = requestAnimationFrame(animate)
             }
-            animate();
         }
+        animate()
+    }
+
+    singleSliding(dir){
+        const state = dir || 'left'
+        const width = this.width
+        const _content = this._content
+        const speed = this.speed
+        const left = this._content.offsetLeft
+        
+        let timer
+        let num = 0
+        
+        function animate(){
+            if (num <= width) {
+                _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
+                timer = requestAnimationFrame(animate)
+                num += speed
+            } 
+        }
+        animate()
+        
     }
 
     initCarousel() {
         this.setBoxSize()
         this.creatCircle()
-        this.round()
+        // this.round()
+        this._box.addEventListener('mouseover',()=>{
+            
+        })
+        this._box.addEventListener('mouseleave',()=>{
+            
+        })
+        this._prev.addEventListener('click',()=>{
+            this.singleSliding('right')
+        })
+        this._next.addEventListener('click',()=>{
+            this.singleSliding('left')
+        })
     }
 }

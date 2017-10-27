@@ -18,9 +18,9 @@
 
 <body>
     <div id="slider-box">
-        
+        <div class="slider-btn slider-prev">&lt;</div>
         <ul class="slider-content">
-            <li class="slider-item slider-item-active">
+            <li class="slider-item">
                 <img src="./images/carousel-1.jpg" alt="轮播图-1">
             </li>
             <li class="slider-item">
@@ -33,13 +33,14 @@
                 <img src="./images/carousel-4.jpg" alt="轮播图-4">
             </li>
         </ul>
+        <div class="slider-btn slider-next">&gt;</div>
     </div>
 
     <script>
         const obj = {
             width:600,
             height:400,
-            speed:15,
+            speed:'fast',
             time:2000
         }
         let carousel = new zCarousel(obj);
