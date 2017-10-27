@@ -117,17 +117,19 @@ class zCarousel {
         const width = this.width
         const _content = this._content
         const speed = this.speed
+        // const max_width = this.len * this.width
+        const max_width = (this.len-1) * this.width
         const left = this._content.offsetLeft
-        
+
         let timer
         let num = 0
-        
+        let limit = (left > -max_width && state == 'left')||(left < 0 && state == 'right')
         function animate(){
-            if (num <= width) {
+            if (num <= width && limit) {
                 _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
                 timer = requestAnimationFrame(animate)
                 num += speed
-            } 
+            }
         }
         animate()
         
