@@ -33,11 +33,15 @@ class zCarousel {
         this._li = document.querySelectorAll('#slider-box .slider-item')
         this._prev = document.querySelector('#slider-box .slider-prev')
         this._next = document.querySelector('#slider-box .slider-next')
+
         this.len = this._li.length
+        this.max_width = this.len * this.width
     }
+    
     /**
      * 设置轮播区域宽高
      * 设置所有li标签的宽度
+     * 克隆第一个li节点，插入到所有li标签后面，实现无缝连接滑动
      */
     setBoxSize() {
         this._box.style.height = this.height + 'px'
@@ -46,9 +50,7 @@ class zCarousel {
         this._li.forEach(_i => {
             _i.style.width = this.width + 'px'
         })
-
         
-        //克隆第一个li节点，插入到所有li标签后面，实现无缝连接滑动
         const _first_li = this._li[0].cloneNode(true)
         this._content.appendChild(_first_li)
     }
@@ -79,7 +81,7 @@ class zCarousel {
      */
     round(direction,start_len) {
         const dir = direction || 'left'
-        const max_width = this.len * this.width
+        const max_width = this.max_width
         const width = this.width
         const _content = this._content
         const speed = this.speed
@@ -87,10 +89,6 @@ class zCarousel {
 
         const state = dir == 'left' ? '-' : ''
         let timer 
-
-        //克隆第一个li节点，插入到所有li标签后面，实现无缝连接滑动
-        const _first_li = this._li[0].cloneNode(true)
-        this._content.appendChild(_first_li)
 
         // let left = Math.abs(_content.offsetLeft)
         let num = start_len || 0
@@ -116,55 +114,40 @@ class zCarousel {
         }
         animate()
     }
-
-    // singleSliding(dir){
-    //     const state = dir || 'left'
-    //     const width = this.width
-    //     const _content = this._content
-    //     const speed = this.speed
-    //     // const max_width = this.len * this.width
-    //     const max_width = (this.len-1) * this.width
-    //     const left = this._content.offsetLeft
-
-    //     let timer
-    //     let num = 0
-    //     let limit = (left > -max_width && state == 'left')||(left < 0 && state == 'right')
-    //     function animate(){
-    //         if (num <= width && limit) {
-    //             _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
-    //             timer = requestAnimationFrame(animate)
-    //             num += speed
-    //         }
-    //     }
-    //     animate()
-        
-    // }
+    
+    /**
+     * 单页滑动效果
+     * @param {string} dir 滑动方向 'left'|'right'
+     */
     singleSliding(dir){
         const state = dir || 'left'
         const width = this.width
         const _content = this._content
         const speed = this.speed
-        const max_width = this.len * this.width
-        // const max_width = (this.len - 1) * this.width
-        const left = this._content.offsetLeft
+        const max_width = this.max_width
 
+        let left = this._content.offsetLeft
         let timer
         let num = 0
         
         function animate(){
+            //循环滑动处理
             if(left <= -max_width && state == 'left'){
                 _content.style.left = 0;
-            }else{
-                if (num <= width) {
-                    _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
-                    timer = requestAnimationFrame(animate)
-                    num += speed
-                }
+                left = 0
+            }else if(left >= 0 && state == 'right'){
+                _content.style.left = -max_width;
+                left = -max_width
             }
-            
+
+            //滑动
+            if (num <= width) {
+                _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
+                timer = requestAnimationFrame(animate)
+                num += speed
+            }
         }
         animate()
-        
     }
 
     initCarousel() {
