@@ -36,6 +36,8 @@ class zCarousel {
 
         this.len = this._li.length
         this.max_width = this.len * this.width
+
+        this.animation = {}
     }
     
     /**
@@ -60,7 +62,6 @@ class zCarousel {
      */
     creatCircle() {
         const _circle = document.createElement('div')
-
         _circle.setAttribute('class', 'slider-circle')
 
         for (let i = 0; i < this.len ;i++) {
@@ -71,48 +72,16 @@ class zCarousel {
         }
         this._box.appendChild(_circle)
     }
-
-
+    
     /**
-     * 图片滑动
-     * @param {string} direction 滑动方向
-     *  'left':向左滑(默认),'right':向右滑 
-     * @param {number} start_len 滑动的起始位置（默认为0）
+     * 图片循环播放
+     * @param {string} dir 滑动方向 'left'|'right'
      */
-    round(direction,start_len) {
-        const dir = direction || 'left'
-        const max_width = this.max_width
-        const width = this.width
-        const _content = this._content
-        const speed = this.speed
-        const time = this.time
-
-        const state = dir == 'left' ? '-' : ''
-        let timer 
-
-        // let left = Math.abs(_content.offsetLeft)
-        let num = start_len || 0
-
-        function animate() {
-            if (num <= max_width) {
-                _content.style.left = state +  num + 'px'
-                
-                if (num % width == 0) {
-                    cancelAnimationFrame(timer)
-                    setTimeout(() => {
-                        timer = requestAnimationFrame(animate)
-                    }, time)
-                } else {
-                    timer = requestAnimationFrame(animate)
-                }
-                num += speed
-            } else {
-                _content.style.left = 0
-                num = 0
-                timer = requestAnimationFrame(animate)
-            }
-        }
-        animate()
+    round(dir){
+        let animation = this.animation
+        animation.setInterval = setInterval(() => {
+            this.singleSliding(dir)
+        },this.time)
     }
     
     /**
@@ -127,7 +96,7 @@ class zCarousel {
         const max_width = this.max_width
 
         let left = this._content.offsetLeft
-        let timer
+        let animation = this.animation
         let num = 0
         
         function animate(){
@@ -143,8 +112,10 @@ class zCarousel {
             //滑动
             if (num <= width) {
                 _content.style.left = left + (state == 'left' ? (-num) : num) + 'px'
-                timer = requestAnimationFrame(animate)
+                animation.timer = requestAnimationFrame(animate)
                 num += speed
+            }else{
+                cancelAnimationFrame(animation.timer)
             }
         }
         animate()
@@ -153,12 +124,16 @@ class zCarousel {
     initCarousel() {
         this.setBoxSize()
         this.creatCircle()
-        // this.round()
+        this.round('left')
         this._box.addEventListener('mouseover',()=>{
+            // window.cancelAnimationFrame(this.animation.timer)
             // console.log(document.querySelectorAll('.slider-btn')[0].style)
         })
+        this._box.addEventListener('mouseenter',() => {
+            clearInterval(this.animation.setInterval)
+        })
         this._box.addEventListener('mouseleave',()=>{
-            
+            this.round('left')
         })
         this._prev.addEventListener('click',()=>{
             this.singleSliding('right')
