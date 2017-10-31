@@ -102,10 +102,10 @@ class zCarousel {
         function animate(){
             //循环滑动处理
             if(left <= -max_width && state == 'left'){
-                _content.style.left = 0;
+                _content.style.left = 0
                 left = 0
             }else if(left >= 0 && state == 'right'){
-                _content.style.left = -max_width;
+                _content.style.left = -max_width
                 left = -max_width
             }
 
