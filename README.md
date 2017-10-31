@@ -1,4 +1,4 @@
 # JavaScript Components
 
-- ### [Carousel](/carousel/README.md)
-- ### [tip](/tips/README.md)
+- [Carousel](/carousel/README.md)
+- [tip](/tips/README.md)
