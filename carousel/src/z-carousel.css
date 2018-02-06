@@ -45,5 +45,20 @@
 
 /* slider-circle */
 #slider-box>.slider-circle{
-    border: solid 1px red;
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
+#slider-box>.slider-circle .circle-item{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    background: transparent;
+    border: solid 1px #fff;
+    margin: 10px 5px;
+}
+#slider-box>.slider-circle .circle-item-active{
+    background: #fff;
 }

@@ -1,4 +1,5 @@
 # JavaScript Components
+Common components based on JS
 
 - [Carousel](/carousel/README.md)
-- [tip](/tips/README.md)
+- [Tip](/tips/README.md)

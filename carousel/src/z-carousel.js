@@ -73,6 +73,22 @@ class zCarousel {
         this._box.appendChild(_circle)
     }
     
+    circleSlide(){
+        let left = Math.abs(this._content.offsetLeft)
+        const index = left / this.width
+        const _circle = document.querySelectorAll('#slider-box .slider-circle .circle-item')
+        for (let _d of _circle){
+            _d.classList.remove("circle-item-active")
+        }
+        console.log(left)
+        console.log(index)
+        if(index < 3){
+            _circle[index+1].classList.add("circle-item-active")
+        }else if(index == 3){
+            _circle[0].classList.add("circle-item-active")
+        }
+    }
+
     /**
      * 图片循环播放
      * @param {string} dir 滑动方向 'left'|'right'
@@ -119,12 +135,13 @@ class zCarousel {
             }
         }
         animate()
+        this.circleSlide()
     }
 
     initCarousel() {
         this.setBoxSize()
         this.creatCircle()
-        this.round('left')
+        // this.round('left')
         this._box.addEventListener('mouseover',()=>{
             // window.cancelAnimationFrame(this.animation.timer)
             // console.log(document.querySelectorAll('.slider-btn')[0].style)
@@ -133,7 +150,7 @@ class zCarousel {
             clearInterval(this.animation.setInterval)
         })
         this._box.addEventListener('mouseleave',()=>{
-            this.round('left')
+            // this.round('left')
         })
         this._prev.addEventListener('click',()=>{
             this.singleSliding('right')
