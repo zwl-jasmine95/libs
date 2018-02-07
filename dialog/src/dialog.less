@@ -1,0 +1,129 @@
+// 弹框
+@keyframes scale {
+    0% {
+        transform:scale(0); 
+    }
+    100% {
+        transform:scale(1); 
+    }
+}
+@keyframes reverse {
+    0% {
+        transform:scale(1); 
+    }
+    100% {
+        transform:scale(0); 
+    }
+}
+#dialog{
+    display: none;
+    
+    .dialog-mask {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        left: 0%;
+        top: 0%;
+        z-index: 900;
+        background-color: rgba(0,0,0,.7);
+    }
+    .dialog-main {
+        position: fixed;
+        box-sizing: border-box;
+        border-radius: 4px;
+        z-index: 1000;
+        background: #fff;
+        display: table;
+        animation: reverse  1s;
+
+        .main-content{
+            text-align: center;
+            // display: table-cell;
+            // vertical-align: middle;
+            // padding: 30px 15px;
+        }
+
+        .main-btn{
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            &:after{
+                content:'';
+                display: block;
+                clear: both;
+            }
+            &.only{
+                text-align: center;
+                button{
+                    // @include btn(100px,36px, $btn-orange-def,$btn-orange-def);
+                }
+            }
+            &.double{
+                button{
+                    &:first-child{
+                        float: left;
+                        // @include btn(100px,36px, rgba(249,109,45,0.20),rgba(249,109,45,0.20));
+                        color: #4a4a4a;
+                    }
+                    &:nth-child(2){
+                        float: right;
+                        // @include btn(100px,36px, $btn-orange-def,$btn-orange-def);
+                    }
+                }
+            }
+        }
+
+        &.msg{
+            width: 350px;
+            height: 140px;
+            top: calc(50% - 70px);
+            left: calc(50% - 175px);
+            .main-content{
+                display: table-cell;
+                vertical-align: middle;
+                padding: 30px 15px;
+            }
+        }
+
+        &.confirm{
+            width: 350px;
+            height: 160px;
+            top: calc(50% - 80px);
+            left: calc(50% - 175px);
+            .main-content{
+                padding: 35px 15px 0 15px;
+                h3{
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        &:after{
+            clear: both;
+            content: "";
+            display: block;
+
+        }
+        .dialog-close{
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 24px;
+            padding: 5px 10px;
+            color: #ccc;
+            cursor: pointer;
+            &:hover{
+                color: #aaa;
+            }
+        }
+    }
+
+    &.appear{
+        display: block;
+        .dialog-main{
+            animation: scale 600ms;
+        }
+    }
+}

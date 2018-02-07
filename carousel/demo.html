@@ -18,7 +18,6 @@
 
 <body>
     <div id="slider-box">
-        <div class="slider-btn slider-prev">&lt;</div>
         <ul class="slider-content">
             <li class="slider-item">
                 <img src="./images/carousel-1.jpg" alt="轮播图-1">
@@ -33,7 +32,6 @@
                 <img src="./images/carousel-4.jpg" alt="轮播图-4">
             </li>
         </ul>
-        <div class="slider-btn slider-next">&gt;</div>
     </div>
 
     <script>
@@ -41,7 +39,8 @@
             width:600,
             height:400,
             speed:'fast',
-            time:2000
+            time:2000,
+            isRound:false
         }
         let carousel = new zCarousel(obj);
         carousel.initCarousel();
