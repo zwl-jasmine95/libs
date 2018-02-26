@@ -21,7 +21,7 @@ class zCarousel {
      * isRound {boolen} 是否自动轮播
      * arrowSlider {boolen} 是否能够手动切换滑块
      * circle {boolen} 是否包含滑动小圆点
-     * circleSlider {boolen} 点击原点是否能切换滑块
+     * circleBtn {boolen} 点击原点是否能切换滑块
      */
     constructor(obj) {
         const s = {
@@ -39,7 +39,7 @@ class zCarousel {
         this.isRound = obj.isRound != undefined ? obj.isRound : true
         this.arrowSlider = obj.arrowSlider != undefined ? obj.arrowSlider : true
         this.circle = obj.circle != undefined ? obj.circle : true
-        this.circleSlider = obj.circleSlider != undefined ? obj.circleSlider : true
+        this.circleBtn = obj.circleBtn != undefined ? obj.circleBtn : true
         
         // 页面元素
         this._box = document.querySelector('#slider-box')
@@ -109,7 +109,9 @@ class zCarousel {
         this._box.appendChild(_circle)
         this._circle = document.querySelectorAll('#slider-box .slider-circle .circle-item')
         
-        this.circleClick()
+        if(this.circleBtn){
+            this.circleClick()
+        }
     }
     
     /**
