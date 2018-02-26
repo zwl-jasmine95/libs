@@ -34,13 +34,19 @@
     top: 50%;
     margin-top: -35px;
     user-select: none;
-    /* opacity: 0; */
+    opacity: 0;
+    transition: all 500ms;
+    border-radius: 8px;
 }
 #slider-box .slider-prev{
-    left: 0;
+    left: 10px;
 }
 #slider-box .slider-next{
-    right: 0;
+    right: 10px;
+}
+#slider-box .slider-active{
+    opacity: 1;
+    transition: all 500ms;
 }
 
 /* slider-circle */
@@ -58,6 +64,7 @@
     background: transparent;
     border: solid 1px #fff;
     margin: 10px 5px;
+    cursor: pointer;
 }
 #slider-box>.slider-circle .circle-item-active{
     background: #fff;

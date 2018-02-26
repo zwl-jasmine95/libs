@@ -83,7 +83,7 @@ class zCarousel {
         this._next = document.querySelector('#slider-box .slider-next')
 
         function creatNode(className,text){
-            var node = document.createElement("div")
+            var node = document.createElement('div')
             var textnode = document.createTextNode(text)
             node.appendChild(textnode)
             node.setAttribute('class',className)
@@ -100,41 +100,69 @@ class zCarousel {
 
         for (let i = 0; i < this.len ;i++) {
             let _item = document.createElement('div')
+            _item.setAttribute('data-index', i)
+
             i == 0 ? _item.setAttribute('class', 'circle-item circle-item-active')
                 : _item.setAttribute('class', 'circle-item')
             _circle.appendChild(_item)
         }
         this._box.appendChild(_circle)
+        this._circle = document.querySelectorAll('#slider-box .slider-circle .circle-item')
+        
+        this.circleClick()
     }
     
     /**
-     * 小圆点样式变化
+     * 轮播时小圆点样式变化
      * @param {string} dir 滑动方向 'left'|'right'
      */
     circleSlide(dir){
         let left = Math.abs(this._content.offsetLeft)
         let index = left / this.width
-        let _circle = document.querySelectorAll('#slider-box .slider-circle .circle-item')
-        let length = _circle.length
-        for (let _d of _circle){
-            _d.classList.remove("circle-item-active")
+        let length = this._circle.length
+        
+        for (let _d of this._circle){
+            _d.classList.remove('circle-item-active')
         }
         
         if(dir == 'left'){
             if(index < length - 1){
-                _circle[index+1].classList.add("circle-item-active")
+                this. _circle[index+1].classList.add('circle-item-active')
             }else if(index == length - 1){
-                _circle[0].classList.add("circle-item-active")
+                this._circle[0].classList.add('circle-item-active')
             }
 
         }else if(dir == 'right'){
             if(index == length){
-                _circle[length - 1].classList.add("circle-item-active")
+                this._circle[length - 1].classList.add('circle-item-active')
             }else if(index <= length - 1){
-                _circle[index - 1].classList.add("circle-item-active")
+                this._circle[index - 1].classList.add('circle-item-active')
             }
         }
         
+    }
+
+    /**
+     * 小圆点点击事件
+     */
+    circleClick(){
+        for (let i = 0;i < this._circle.length;i++) {
+            let _d = this._circle[i]
+            _d.addEventListener('click',() => {
+                let _prevActive = document.querySelector('#slider-box .slider-circle .circle-item-active')
+                let prevIndex = _prevActive.getAttribute('data-index')
+                let width = Math.abs(i - prevIndex) * this.width, dir
+                
+                if(i > prevIndex) {
+                    dir = 'left'
+                }else if(i < prevIndex) {
+                    dir = 'right'
+                }
+                _prevActive.classList.remove('circle-item-active')
+                _d.classList.add('circle-item-active')
+                this.singleSliding(dir,width)
+            })
+        }
     }
 
     /**
@@ -152,9 +180,9 @@ class zCarousel {
      * 单页滑动效果
      * @param {string} dir 滑动方向 'left'|'right'
      */
-    singleSliding(dir){
+    singleSliding(dir,_width){
         const state = dir || 'left'
-        const width = this.width
+        const width = _width || this.width
         const _content = this._content
         const speed = this.speed
         const max_width = this.max_width
@@ -184,8 +212,8 @@ class zCarousel {
         }
         animate()
 
-        //是否有圆点
-        if(this.circle){
+        //是否有圆点（轮播时小圆点样式变化）
+        if(this.circle && !_width){
             this.circleSlide(dir)
         }
     }
@@ -193,11 +221,6 @@ class zCarousel {
     initCarousel() {
         this.setBoxSize()
         
-        //是否需要圆点
-        if(this.circle){
-            this.creatCircle()
-        }
-
         //是否自动轮播
         if(this.isRound){
             this.round('left')
@@ -218,8 +241,20 @@ class zCarousel {
             })
         }
 
+        //是否需要圆点
+        if(this.circle){
+            this.creatCircle()
+        }
+
         this._box.addEventListener('mouseenter',() => {
             clearInterval(this.animation.setInterval)
+            this._prev.classList.add('slider-active')
+            this._next.classList.add('slider-active')
+        })
+
+        this._box.addEventListener('mouseleave',()=>{
+            this._prev.classList.remove('slider-active')
+            this._next.classList.remove('slider-active')
         })
     }
 }
